@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+// Route::get('/', function () {
+//     return view('welcome');
+// })->name('home');
 
 Route::post('/signup', [
   'uses' => 'UserController@postSignUp',
@@ -72,7 +72,8 @@ Route::post('/edit', [
 // ]);
 
 Auth::routes();
-Route::get('/home', 'HomeController@index');
+//Route::get('/home', 'HomeController@index');
+Route::get('/', 'PostController@getDashboard');
 
 
 
