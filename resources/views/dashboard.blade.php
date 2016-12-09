@@ -4,8 +4,46 @@
 <li><a href="#map" class="scrollable">Map</a></li>
 <li><a href="#portfolio" class="scrollable">New</a></li>
 <li><a href="#contact" class="scrollable">Share</a></li>
-<li><a href="{{ route('logout') }}">Logout</a></li>
+<li id="loggedin"><a onclick="popupLogin()">Login</a></li>
+<!-- <li><a href="{{ route('logout') }}">Logout</a></li> -->
 
+<div id = "loginModal" class = "modal">
+<div class = "modal-content">
+<!-- @include('includes.message-block') -->
+<h3>Login</h3>
+	<form action="{{ route('signin') }}" method="post">
+		<div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
+			<label for="email">email</label>
+			<input class="form-control" type="text" name="email" id="email" value="{{ Request::old('email') }}">
+		</div>
+		<div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
+			<label for="password">password</label>
+			<input class="form-control" type="password" name="password" id="password" value="{{ Request::old('password') }}">
+		</div>
+			<button type="submit" class="btn btn-primary">Submit</button>
+			<input type="hidden" name="_token" value="{{ Session::token() }}">
+	</form>
+</div>
+</div>
+
+@if(Auth::user())
+<script>
+document.getElementById("loggedin").innerHTML = '<a href="{{ route('logout') }}">Logout</a>';
+</script>
+@endif
+
+<!-- <script>
+@if('$loginResult')
+alert("{{'$loginResult'}}");
+@endif
+</script> -->
+
+<script>
+//document.getElementById("loginModal").style.display = "block";
+function popupLogin(){
+	document.getElementById("loginModal").style.display = "block";
+}
+</script>
 <!-- end header-->
 @stop
 
@@ -100,6 +138,8 @@ window.onclick = function(event)
 	if(event.target == modal)
 	{
 		modal.style.display = "none";
+	} else if (event.target == document.getElementById("loginModal")){
+		document.getElementById("loginModal").style.display = "none";
 	}
 }
 
@@ -116,9 +156,9 @@ async defer></script>
 	<br/>
   <h2>New Location</h2>
   <ul class="grid">
-    @foreach ($database as $data)
-      <li><img src="{{ $data->imageUrl }}" alt="image not available"><font color="#666"> {{$data->imageStory}} </br>-{{$data->imageLocation}} </font></li>
-  @endforeach
+		@foreach ($database as $data)
+		<li><img src="{{ $data->imageUrl }}" alt="image not available"><font color="#666"> {{$data->imageStory}} </br>-{{$data->imageLocation}} </font></li>
+		@endforeach
   </ul>
 </section>
 @stop
@@ -233,7 +273,7 @@ async defer></script>
   </script>
 @stop
 
-@section('feedback')
+<!-- @section('feedback')
 <section class="row new-post">
   <div class="col-md-6 col-md-offset-3">
   </br>
@@ -294,7 +334,7 @@ async defer></script>
 var token = '{{ Session::token() }}';
 var url = '{{ route('edit') }}';
 </script>
-@stop
+@stop -->
 
 @section('footer')
 <!-- Footer-->

@@ -6,6 +6,13 @@ TripTrip
 
 @section('content')
   @include('includes.message-block')
+
+  <script>
+  @if($loginResult)
+  alert('{{$loginResult}}');
+  @endif
+  </script>
+
 <div class="row">
   <div class="col-md-6">
   <h3>Sign Up</h3>

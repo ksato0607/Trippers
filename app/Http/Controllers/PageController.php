@@ -9,10 +9,10 @@ use App\Http\Requests;
 
 class PageController extends Controller
 {
-    public function home(){
-      $databaseResult = DB::table('tblImages')->get();
-      return view('portfolio',['database' => $databaseResult]);
-    }
+    // public function home(){
+    //   $databaseResult = DB::table('tblImages')->get();
+    //   return view('portfolio',['database' => $databaseResult]);
+    // }
 
     public function databasePost()
     {

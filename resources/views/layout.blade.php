@@ -63,7 +63,7 @@
       <!-- Scroll to Top Button (Only supposed to be visible on small and small screen sizes)-->
       <div class="scroll-top"><a href="#top" class="button scrollable"><i class="fa fa-chevron-up"></i></a></div>
 
-      @yield('feedback')
+      <!-- @yield('feedback') -->
       @yield('footer')
     </body>
 </html>

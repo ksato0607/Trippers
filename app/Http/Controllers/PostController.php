@@ -13,7 +13,8 @@ class PostController extends Controller
   {
     $posts = Post::orderBy('created_at', 'desc')->get();
     $databaseResult = DB::table('tblImages')->get();
-    return view('dashboard', ['posts' => $posts],['database' => $databaseResult]);
+    $loginResult = 'Error';
+    return view('dashboard', ['posts' => $posts],['database' => $databaseResult],['loginResult' => $loginResult]);
   }
 
     public function postCreatePost(Request $request)

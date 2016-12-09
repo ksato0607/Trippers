@@ -12,8 +12,13 @@
 */
 
 // Route::get('/', function () {
-//     return view('welcome');
-// })->name('home');
+//     $loginResult = 'Error';
+//     return view('welcome', ['loginResult' => $loginResult]);
+// })->name('welcome');
+
+// Route::get('/', function () {
+//     return view('auth.login');
+// });
 
 Route::post('/signup', [
   'uses' => 'UserController@postSignUp',
@@ -73,13 +78,13 @@ Route::post('/edit', [
 
 Auth::routes();
 //Route::get('/home', 'HomeController@index');
-Route::get('/', 'PostController@getDashboard');
+Route::get('/', 'PostController@getDashboard')->name('dashboard');
 
 
 
-//Keisiuke's
-Route::get('/tripStart', 'PageController@home')->name('tripStart');
-Route::get('/test','PageController@databasePost');
+// //Keisiuke's
+// Route::get('/tripStart', 'PageController@home')->name('tripStart');
+// Route::get('/test','PageController@databasePost');
 
 //
 // Route::get('image-upload','PageController@imageUpload');
