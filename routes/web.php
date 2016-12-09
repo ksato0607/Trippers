@@ -11,6 +11,7 @@
 |
 */
 
+//
 // Route::get('/', function () {
 //     $loginResult = 'Error';
 //     return view('welcome', ['loginResult' => $loginResult]);
