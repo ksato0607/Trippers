@@ -5,11 +5,12 @@
 <li><a href="#portfolio" class="scrollable">New</a></li>
 <li><a href="#contact" class="scrollable">Share</a></li>
 <li id="loggedin"><a onclick="popupLogin()">Login</a></li>
-<!-- <li><a href="{{ route('logout') }}">Logout</a></li> -->
 
 <div id = "loginModal" class = "modal">
 <div class = "modal-content">
-<!-- @include('includes.message-block') -->
+<div class="row">
+<div class="col-md-6">
+<label id="errorMessage" style="display: none; color:red;">Sorry, could not match email&password</label>
 <h3>Login</h3>
 	<form action="{{ route('signin') }}" method="post">
 		<div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
@@ -24,25 +25,86 @@
 			<input type="hidden" name="_token" value="{{ Session::token() }}">
 	</form>
 </div>
+<div class="col-md-6">
+	<h3>Signup</h3>
+	<form action="{{ route('signup') }}" method="post">
+		<div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
+			<label for="email">email</label>
+			<input class="form-control" type="text" name="email" id="email" value="{{ Request::old('email') }}">
+		</div>
+		<div class="form-group {{ $errors->has('first_name') ? 'has-error' : '' }}">
+			<label for="first_name">username</label>
+			<input class="form-control" type="text" name="first_name" id="first_name" value="{{ Request::old('first_name') }}">
+		</div>
+		<div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
+			<label for="password">password</label>
+			<input class="form-control" type="password" name="password" id="password" value="{{ Request::old('password') }}">
+		</div>
+		<!-- <div class="form-group {{ $errors->has('profileImage') ? 'has-error' : '' }}">
+			<label for="profileImage">Profile Image</label>
+			<input type="file" value="upload" id="profileButton" type="profileImage" name="profileImage"/>
+		</div> -->
+			<button type="submit" class="btn btn-primary" id="submit">Submit</button>
+			<input type="hidden" name="_token" value="{{ Session::token() }}">
+	</form>
+</div>
+</div>
 </div>
 
-@if(Auth::user())
 <script>
-document.getElementById("loggedin").innerHTML = '<a href="{{ route('logout') }}">Logout</a>';
-</script>
+//When login is failed, error message will be displayed
+@if($login)
+document.getElementById("loginModal").style.display = "block";
+document.getElementById("errorMessage").style.display = "block";
 @endif
 
-<!-- <script>
-@if('$loginResult')
-alert("{{'$loginResult'}}");
-@endif
-</script> -->
-
-<script>
-//document.getElementById("loginModal").style.display = "block";
+// login button is clicked
 function popupLogin(){
 	document.getElementById("loginModal").style.display = "block";
+	document.getElementById("errorMessage").style.display = "none";
 }
+
+// login button is changed to logout when a user is logged in
+@if(Auth::user())
+document.getElementById("loggedin").innerHTML = '<a href="{{ route('logout') }}">Logout</a>';
+@endif
+
+// // profile image is uploaded to firebase and get the url
+// var profileButton = document.getElementById('profileButton');
+// var submitButton = document.getElementById('submitButton');
+//
+// profileButton.addEventListener('change',function(e){
+// 	submitButton.addEventListener('click',function(){
+// 		if(profileValidate()){
+// 		var file = e.target.files[0];
+// 		var storageRef = firebase.storage().ref(file.name);
+// 		var email = document.getElementById('email');
+// 		storageRef.put(file);
+// 		storageRef.getDownloadURL().then(function(url) {
+// 			var profileUrl = url;
+// 			$.get("/profileUpdate?profileUrl=" + profileUrl + '&email=' + email);
+// 		});
+// 	}
+// 	});
+// });
+//
+// function profileValidate(){
+// 	var image = document.getElementById('profileButton');
+// 	var imageUploadPath = image.value;
+//
+// 	//To check if user upload any file
+// 	if (imageUploadPath != '') {
+// 		var extension = imageUploadPath.substring(
+// 			imageUploadPath.lastIndexOf('.') + 1).toLowerCase();
+//
+// 			//The file uploaded is an image
+// 			if (extension == "gif" || extension == "png" || extension == "bmp"
+// 			|| extension == "jpeg" || extension == "jpg") {
+// 				return true;
+// 			}
+// 			return false;
+// 		}
+// 	}
 </script>
 <!-- end header-->
 @stop
@@ -226,22 +288,39 @@ async defer></script>
 
   var fileButton = document.getElementById('fileButton');
   var shareButton = document.getElementById('shareButton');
+	var usernameInput = document.getElementById('name');
+
+	usernameInput.addEventListener('change',function(e){
+		checkLogin();
+	});
+
+	function checkLogin(){
+		@if(Auth::user())
+			return true;
+		@else
+			document.getElementById("loginModal").style.display = "block";
+			document.getElementById("errorMessage").style.display = "block";
+			document.getElementById("errorMessage").innerHTML = "Please login before sharing your story";
+			return false;
+		@endif
+	}
+
 
   fileButton.addEventListener('change',function(e){
     shareButton.addEventListener('click',function(){
-      if(imageValidate()){
-      var file = e.target.files[0];
-      var storageRef = firebase.storage().ref(file.name);
-      var message = document.getElementById('message').value;
-      var imageLocation = document.getElementById('location').value;
-      storageRef.put(file);
-      storageRef.getDownloadURL().then(function(url) {
-        var imageUrl = url;
-        $.get("/test?url=" + imageUrl + '&message='+message + '&location=' + imageLocation);
-        localStorage.setItem("validationSuccess", "TRUE");
-        location.reload(); //To update database on our web
-      });
-    }
+				if(checkLogin() && imageValidate()){
+					var file = e.target.files[0];
+					var storageRef = firebase.storage().ref(file.name);
+					var message = document.getElementById('message').value;
+					var imageLocation = document.getElementById('location').value;
+					storageRef.put(file);
+					storageRef.getDownloadURL().then(function(url) {
+						var imageUrl = url;
+						$.get("/test?url=" + imageUrl + '&message='+message + '&location=' + imageLocation);
+						localStorage.setItem("validationSuccess", "TRUE");
+						location.reload(); //To update database on our web
+					});
+				}
     });
   });
 
@@ -273,90 +352,28 @@ async defer></script>
   </script>
 @stop
 
-<!-- @section('feedback')
-<section class="row new-post">
-  <div class="col-md-6 col-md-offset-3">
-  </br>
-    <header><h3>We would like to improve our website! Your voice will be helpful!!</h3></header>
-  </div>
-  <center>
-    <form action="{{ route('post.create') }}" method="post">
-      <div class="form-group">
-        <textarea class="form-control" name="body" id="new-post" rows="5" placeholder="type message here..."></textarea>
-      </div>
-      <button type="submit" class="btn btn-primary">Post</button>
-    </br></br>
-      <input type="hidden" value="{{ Session::token() }}" name="_token">
-    </form>
-  </center>
-  <div class="col-md-6 col-md-3-offset">
-    @foreach($posts as $post)
-      <article class="post" data-postid="{{ $post->id }}">
-        <p style="color: #000">{{ $post->body }}</p>
-        <div class="info">
-          Posted by {{ $post->user->first_name }} on {{ $post->created_at }}
-        </div>
-        <div class="interaction">
-          @if(Auth::user() == $post->user)
-            <a href="#" class="edit">Edit</a> |
-            <a href="{{ route('post.delete', ['post_id' => $post->id]) }}">Delete</a>
-          @endif
-        </div>
-      </article>
-    @endforeach
-  </div>
-</section>
-
-<div class="modal fade" tabindex="-1" role="dialog" id="edit-modal">
-<div class="modal-dialog" role="document">
-  <div class="modal-content">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      <h4 class="modal-title">Edit Post</h4>
-    </div>
-    <div class="modal-body">
-      <form>
-        <div class="form-group">
-          <label for="post-body">Edit</label>
-          <textarea class="form-control" name="post-body" id="post-body"></textarea>
-        </div>
-      </form>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      <button type="button" class="btn btn-primary" id="modal-save">Save changes</button>
-    </div>
-  </div>
-</div>
-</div>
-
-<script>
-var token = '{{ Session::token() }}';
-var url = '{{ route('edit') }}';
-</script>
-@stop -->
-
 @section('footer')
 <!-- Footer-->
 <footer>
-  <div id="footer-above">
+	<div id="footer-above">
 		<div>
-		<h3>Would you like to give us feedback? <a onclick="popupEmail()">Email Us</a></h3>
+			<h3>Would you like to give us feedback? <a onclick="popupEmail()">Email Us</a></h3>
 		</div>
 		<div>
-      <h3>Travellers</h3>
+			<h3>Travellers</h3>
 			<img id="travellers" src="https://firebasestorage.googleapis.com/v0/b/laravel-659e1.appspot.com/o/10525892_690031424377754_5873567534962833692_n.jpg?alt=media&token=4567c703-7ca5-402d-a714-9db71049ec61"></img>
-    </div>
-    <div>
-      <h3>Around the Web</h3>
-      <div class="social"><ul>
-        <li><a target="_blank" href="https://www.linkedin.com/in/keisuke-sato-15a601a0?trk=nav_responsive_tab_profile_pic" class="button social"><i class="fa fa-fw fa-linkedin"></i></a></li>
-        <li><a target="_blank" href="https://github.com/ksato0607/309Laravel" class="button social"><i class="fa fa-fw fa-github"></i></a></li>
-        <li><a target="_blank" href="https://twitter.com/trip_go_trip" class="button social"><i class="fa fa-fw fa-twitter"></i></a></li>
-      </ul>
-          </div>
-    </div>
-  </div>
+		</div>
+		<div>
+			<h3>Around the Web</h3>
+			<div class="social"><ul>
+				<li><a target="_blank" href="https://www.linkedin.com/in/keisuke-sato-15a601a0?trk=nav_responsive_tab_profile_pic" class="button social"><i class="fa fa-fw fa-linkedin"></i></a></li>
+				<li><a target="_blank" href="https://github.com/ksato0607/309Laravel" class="button social"><i class="fa fa-fw fa-github"></i></a></li>
+				<li><a target="_blank" href="https://twitter.com/trip_go_trip" class="button social"><i class="fa fa-fw fa-twitter"></i></a></li>
+			</ul>
+			<div class="fb-like" data-href="http://phplaravel-31991-69079-187106.cloudwaysapps.com/" data-layout="standard" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div>
+		</div>
+	</div>
+</div>
 	<div id = "myModal" class = "modal">
 	<div class = "modal-content">
 		<p id = "disp"></p>

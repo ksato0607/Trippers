@@ -30,4 +30,4 @@ function initMap() {
     zoom: 2,
     scrollwheel: false
   });
-}
+}}

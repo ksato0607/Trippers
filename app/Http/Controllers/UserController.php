@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
 
 class UserController extends Controller
 {
@@ -31,7 +33,6 @@ class UserController extends Controller
     Auth::login($user);
 
     return redirect()->route('dashboard');
-    //return redirect()->route('tripStart');
   }
 
   public function postDashboard(Request $request)
@@ -45,11 +46,13 @@ class UserController extends Controller
       'email' => 'required',
       'password' => 'required'
     ]);
-
     if(Auth::attempt(['email' => $request['email'], 'password' => $request['password']])) {
       return redirect()->route('dashboard');
     }
-    return redirect()->route('dashboard');
+    $databaseResult = DB::table('tblImages')->get();
+    $loginResult = "error";
+    return view('dashboard', ['database' => $databaseResult],['login' => $loginResult]);
+    //return redirect()->route('dashboard'); //use this or the one above
   }
     public function getAccount()
     {

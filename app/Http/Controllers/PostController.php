@@ -11,11 +11,21 @@ class PostController extends Controller
 {
   public function getDashboard()
   {
-    $posts = Post::orderBy('created_at', 'desc')->get();
+    //$posts = Post::orderBy('created_at', 'desc')->get(); // it will be useful when you need post
     $databaseResult = DB::table('tblImages')->get();
-    $loginResult = 'Error';
-    return view('dashboard', ['posts' => $posts],['database' => $databaseResult],['loginResult' => $loginResult]);
+    $loginResult = "";
+    return view('dashboard', ['database' => $databaseResult],['login' => $loginResult]);
+    //return view('dashboard', ['posts' => $posts],['database' => $databaseResult],['login' => $loginResult]); //we can only pass two parameters
   }
+
+  //Just for testing
+  // public function getWelcome()
+  // {
+  //   $loginResult = "Error";
+  //   $posts = Post::orderBy('created_at', 'desc')->get();
+  //   $databaseResult = DB::table('tblImages')->get();
+  //   return view('welcome', ['login' => $loginResult], ['posts' => $posts],['database' => $databaseResult]);
+  // }
 
     public function postCreatePost(Request $request)
     {

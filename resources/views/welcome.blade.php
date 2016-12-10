@@ -8,8 +8,8 @@ TripTrip
   @include('includes.message-block')
 
   <script>
-  @if($loginResult)
-  alert('{{$loginResult}}');
+  @if($login)
+  alert('{{$login}}');
   @endif
   </script>
 

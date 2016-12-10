@@ -20,4 +20,14 @@ class PageController extends Controller
       DB::table('tblImages')->insert(['imageUrl' => $_REQUEST["url"], 'imageStory'=>$_REQUEST["message"], 'imageLocation'=>$_REQUEST["location"]]);
       }
     }
+
+    public function profilePost()
+    {
+      // if(isset($_REQUEST["profileUrl"]) && isset($_REQUEST["email"])){
+      // DB::table('users2')->where('email', $_REQUEST["email"])->update(['profileUrl' => $_REQUEST["profileUrl"]]);
+      // }
+      // else{
+      //   DB::table('users2')->where('email', $_REQUEST["email"])->update(['profileUrl' => "failed"]);
+      // }
+    }
 }

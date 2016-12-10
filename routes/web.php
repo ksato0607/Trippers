@@ -11,12 +11,7 @@
 |
 */
 
-//
-// Route::get('/', function () {
-//     $loginResult = 'Error';
-//     return view('welcome', ['loginResult' => $loginResult]);
-// })->name('welcome');
-
+//Route::get('/', 'PostController@getWelcome')->name('welcome');
 // Route::get('/', function () {
 //     return view('auth.login');
 // });
@@ -26,7 +21,7 @@ Route::post('/signup', [
   'as' => 'signup'
 ]);
 
-Route::post('/signin', [
+Route::post('/', [
   'uses' => 'UserController@postSignIn',
   'as' => 'signin'
 ]);
@@ -80,13 +75,5 @@ Route::post('/edit', [
 Auth::routes();
 //Route::get('/home', 'HomeController@index');
 Route::get('/', 'PostController@getDashboard')->name('dashboard');
-
-
-
-// //Keisiuke's
-// Route::get('/tripStart', 'PageController@home')->name('tripStart');
-// Route::get('/test','PageController@databasePost');
-
-//
-// Route::get('image-upload','PageController@imageUpload');
-// Route::post('/','PageController@imageUploadPost');
+Route::get('/test','PageController@databasePost'); //This is used to update travelling images 
+Route::get('/profileUpdate','PageController@profilePost'); //This is used to update profile image
