@@ -387,3 +387,50 @@ function popupEmail(){
 }
 </script>
 @stop
+
+@section('translate')
+<style> .goog-te-banner-frame.skiptranslate{display:none!important;}body{top: 0px!important;} </style>
+<div id="google_translate_element"></div><script type="text/javascript">
+function googleTranslateElementInit() {
+	new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+}
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<script>
+// Find all  <input> placeholders
+var inputPlaceholders = document.querySelectorAll('input[placeholder]');
+//Find all <textarea> placeholders
+var textareaPlaceholders = document.querySelectorAll('textarea[placeholder]');
+//combine intput and textarea placeholders and convert placeholders to an array
+var placeholders = Array.prototype.slice.call(inputPlaceholders).concat(Array.prototype.slice.call(textareaPlaceholders));
+if (placeholders.length) {
+	// copy placeholder text to a hidden div
+	var div = $('<div id="placeholders" style="display:none;"></div>');
+	placeholders.forEach(function(input){
+		var text = input.placeholder;
+		div.append('<div>' + text + '</div>');
+	});
+	$('body').append(div);
+
+	// save the first placeholder in a closure
+	var original = placeholders[0].placeholder;
+
+	// check for changes and update as needed
+	setInterval(function(){
+		if (isTranslated()) {
+			updatePlaceholders();
+			original = placeholders[0].placeholder;
+		}}, 500);
+	function isTranslated() {  // true if translated
+		var current = $($('#placeholders > div')[0]).text();
+		return !(original == current);
+	}
+	function updatePlaceholders() {
+		$('#placeholders > div').each(function(i, div){
+			placeholders[i].placeholder = $(div).text();
+		});
+	}
+}
+</script>
+@stop

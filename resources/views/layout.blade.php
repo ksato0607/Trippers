@@ -73,5 +73,8 @@
 
       <!-- @yield('feedback') -->
       @yield('footer')
+      
+      <!-- Google Translator -->
+      @yield('translate')
     </body>
 </html>
