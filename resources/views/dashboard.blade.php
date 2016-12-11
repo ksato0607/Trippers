@@ -87,7 +87,7 @@ document.getElementById("loggedin").innerHTML = '<a href="{{ route('logout') }}"
 // 			});
 // 		}
 // });
-// 
+//
 // function profileValidate(){
 // 	var image = document.getElementById('profileButton');
 // 	var imageUploadPath = image.value;
@@ -302,25 +302,25 @@ async defer></script>
   var shareButton = document.getElementById('shareButton');
 	var usernameInput = document.getElementById('name');
 
-	usernameInput.addEventListener('change',function(e){
-		checkLogin();
-	});
-
-	function checkLogin(){
-		@if(Auth::user())
-			return true;
-		@else
-			document.getElementById("loginModal").style.display = "block";
-			document.getElementById("errorMessage").style.display = "block";
-			document.getElementById("errorMessage").innerHTML = "Please login before sharing your story";
-			return false;
-		@endif
-	}
+	// usernameInput.addEventListener('change',function(e){
+	// 	checkLogin();
+	// });
+	//
+	// function checkLogin(){
+	// 	@if(Auth::user())
+	// 		return true;
+	// 	@else
+	// 		document.getElementById("loginModal").style.display = "block";
+	// 		document.getElementById("errorMessage").style.display = "block";
+	// 		document.getElementById("errorMessage").innerHTML = "Please login before sharing your story";
+	// 		return false;
+	// 	@endif
+	// }
 
 
   fileButton.addEventListener('change',function(t_image){
     shareButton.addEventListener('click',function(){
-				if(checkLogin() && imageValidate()){
+				if(imageValidate()){
 					var file = t_image.target.files[0];
 					var storageRef = firebase.storage().ref(file.name);
 					var message = document.getElementById('message').value;
