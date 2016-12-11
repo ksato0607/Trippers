@@ -40,9 +40,12 @@
 			<label for="password">password</label>
 			<input class="form-control" type="password" name="password" id="password" value="{{ Request::old('password') }}">
 		</div>
-		<!-- <div class="form-group {{ $errors->has('profileImage') ? 'has-error' : '' }}">
-			<label for="profileImage">Profile Image</label>
-			<input type="file" value="upload" id="profileButton" type="profileImage" name="profileImage"/>
+		<div class="form-group {{ $errors->has('profileImage') ? 'has-error' : '' }}">
+			<label for="profileUrl">Profile Image</label>
+			<input type="file" name="profileUrl"　id="profileButton" title=" " value=""/>
+		</div>
+		<!-- <div class="form-group">
+			<input type="text" name="image" id="image" value="hi"/>
 		</div> -->
 			<button type="submit" class="btn btn-primary" id="submit">Submit</button>
 			<input type="hidden" name="_token" value="{{ Session::token() }}">
@@ -69,42 +72,39 @@ function popupLogin(){
 document.getElementById("loggedin").innerHTML = '<a href="{{ route('logout') }}">Logout</a>';
 @endif
 
-// // profile image is uploaded to firebase and get the url
-// var profileButton = document.getElementById('profileButton');
-// var submitButton = document.getElementById('submitButton');
-//
-// profileButton.addEventListener('change',function(e){
-// 	submitButton.addEventListener('click',function(){
-// 		if(profileValidate()){
-// 		var file = e.target.files[0];
-// 		var storageRef = firebase.storage().ref(file.name);
-// 		var email = document.getElementById('email');
-// 		storageRef.put(file);
-// 		storageRef.getDownloadURL().then(function(url) {
-// 			var profileUrl = url;
-// 			$.get("/profileUpdate?profileUrl=" + profileUrl + '&email=' + email);
-// 		});
-// 	}
-// 	});
-// });
-//
-// function profileValidate(){
-// 	var image = document.getElementById('profileButton');
-// 	var imageUploadPath = image.value;
-//
-// 	//To check if user upload any file
-// 	if (imageUploadPath != '') {
-// 		var extension = imageUploadPath.substring(
-// 			imageUploadPath.lastIndexOf('.') + 1).toLowerCase();
-//
-// 			//The file uploaded is an image
-// 			if (extension == "gif" || extension == "png" || extension == "bmp"
-// 			|| extension == "jpeg" || extension == "jpg") {
-// 				return true;
-// 			}
-// 			return false;
-// 		}
-// 	}
+// profile image is uploaded to firebase and get the url
+var profileButton = document.getElementById('profileButton');
+var submitButton = document.getElementById('submitButton');
+
+profileButton.addEventListener('change',function(e){
+		if(profileValidate()){
+			var file = e.target.files[0];
+			var storageRef = firebase.storage().ref(file.name);
+			storageRef.put(file);
+			storageRef.getDownloadURL().then(function(url) {
+				var profileUrl = url;
+				// document.getElementById('image').value = "yesyes";
+			});
+		}
+});
+
+function profileValidate(){
+	var image = document.getElementById('profileButton');
+	var imageUploadPath = image.value;
+
+	//To check if user upload any file
+	if (imageUploadPath != '') {
+		var extension = imageUploadPath.substring(
+			imageUploadPath.lastIndexOf('.') + 1).toLowerCase();
+
+			//The file uploaded is an image
+			if (extension == "gif" || extension == "png" || extension == "bmp"
+			|| extension == "jpeg" || extension == "jpg") {
+				return true;
+			}
+			return false;
+		}
+	}
 </script>
 <!-- end header-->
 @stop
@@ -118,7 +118,7 @@ document.getElementById("loggedin").innerHTML = '<a href="{{ route('logout') }}"
 
 <!-- Adding Map -->
 @section('map')
-<div id="floating-panel"></div>
+<!-- <div id="floating-panel"></div> -->
 <div id="map"></div>
 <div id = "myModal" class = "modal">
 <div class = "modal-content">
@@ -147,7 +147,7 @@ function initMap() {
     geocodeAddress(geocoder, map, "{{$data->imageLocation}}", "{{$data->imageUrl}}", "{{$data->imageStory}}");
     totalTravellers++;
   @endforeach
-  document.getElementById("floating-panel").innerHTML = totalTravellers + " Travellers Visited ";
+  // document.getElementById("floating-panel").innerHTML = totalTravellers + " Travellers Visited ";
 
   google.maps.event.addDomListener(window, "resize", function() {
    var center = map.getCenter();
@@ -219,7 +219,16 @@ async defer></script>
   <h2>New Location</h2>
   <ul class="grid">
 		@foreach ($database as $data)
-		<li><img src="{{ $data->imageUrl }}" alt="image not available"><font color="#666"> {{$data->imageStory}} </br>-{{$data->imageLocation}} </font></li>
+		<li><img src="{{ $data->imageUrl }}" alt="image not available">
+			<div class="row">
+			<div class="col-md-10">
+				<font color="#666"> {{$data->imageStory}} </br>-{{$data->imageLocation}} </font>
+			</div>
+			<div class="col-md-2">
+				<img id="travellers" src="{{ $data->profileUrl}}"></img>
+			</div>
+		</div>
+	</li>
 		@endforeach
   </ul>
 </section>
@@ -361,13 +370,15 @@ async defer></script>
 		</div>
 		<div>
 			<h3>Travellers</h3>
-			<img id="travellers" src="https://firebasestorage.googleapis.com/v0/b/laravel-659e1.appspot.com/o/10525892_690031424377754_5873567534962833692_n.jpg?alt=media&token=4567c703-7ca5-402d-a714-9db71049ec61"></img>
+			@foreach ($database as $data)
+			<img id="travellers" src="{{$data->profileUrl}}"></img>
+			@endforeach
 		</div>
 		<div>
 			<h3>Around the Web</h3>
 			<div class="social"><ul>
 				<li><a target="_blank" href="https://www.linkedin.com/in/keisuke-sato-15a601a0?trk=nav_responsive_tab_profile_pic" class="button social"><i class="fa fa-fw fa-linkedin"></i></a></li>
-				<li><a target="_blank" href="https://github.com/ksato0607/309Laravel" class="button social"><i class="fa fa-fw fa-github"></i></a></li>
+				<li><a target="_blank" href="https://github.com/ksato0607/Trippers" class="button social"><i class="fa fa-fw fa-github"></i></a></li>
 				<li><a target="_blank" href="https://twitter.com/trip_go_trip" class="button social"><i class="fa fa-fw fa-twitter"></i></a></li>
 			</ul>
 			<div class="fb-like" data-href="http://phplaravel-31991-69079-187106.cloudwaysapps.com/" data-layout="standard" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div>

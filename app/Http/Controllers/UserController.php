@@ -22,11 +22,13 @@ class UserController extends Controller
     $email = $request['email'];
     $first_name = $request['first_name'];
     $password = bcrypt($request['password']);
+    $profileUrl = $request['image'];
 
     $user = new User();
     $user->email = $email;
     $user->first_name = $first_name;
     $user->password = $password;
+    $user->profileUrl = $profileUrl;
 
     $user->save();
 
