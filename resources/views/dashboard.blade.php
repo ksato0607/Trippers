@@ -40,10 +40,10 @@
 			<label for="password">password</label>
 			<input class="form-control" type="password" name="password" id="password" value="{{ Request::old('password') }}">
 		</div>
-		<div class="form-group {{ $errors->has('profileImage') ? 'has-error' : '' }}">
+		<!-- <div class="form-group {{ $errors->has('profileImage') ? 'has-error' : '' }}">
 			<label for="profileUrl">Profile Image</label>
 			<input type="file" name="profileUrl"　id="profileButton" title=" " value=""/>
-		</div>
+		</div> -->
 		<!-- <div class="form-group">
 			<input type="text" name="image" id="image" value="hi"/>
 		</div> -->
@@ -73,38 +73,38 @@ document.getElementById("loggedin").innerHTML = '<a href="{{ route('logout') }}"
 @endif
 
 // profile image is uploaded to firebase and get the url
-var profileButton = document.getElementById('profileButton');
-var submitButton = document.getElementById('submitButton');
+//var profileButton = document.getElementById('profileButton');
+//var submitButton = document.getElementById('submitButton');
 
-profileButton.addEventListener('change',function(e){
-		if(profileValidate()){
-			var file = e.target.files[0];
-			var storageRef = firebase.storage().ref(file.name);
-			storageRef.put(file);
-			storageRef.getDownloadURL().then(function(url) {
-				var profileUrl = url;
-				// document.getElementById('image').value = "yesyes";
-			});
-		}
-});
-
-function profileValidate(){
-	var image = document.getElementById('profileButton');
-	var imageUploadPath = image.value;
-
-	//To check if user upload any file
-	if (imageUploadPath != '') {
-		var extension = imageUploadPath.substring(
-			imageUploadPath.lastIndexOf('.') + 1).toLowerCase();
-
-			//The file uploaded is an image
-			if (extension == "gif" || extension == "png" || extension == "bmp"
-			|| extension == "jpeg" || extension == "jpg") {
-				return true;
-			}
-			return false;
-		}
-	}
+// profileButton.addEventListener('change',function(e){
+// 		if(profileValidate()){
+// 			var file = e.target.files[0];
+// 			var storageRef = firebase.storage().ref(file.name);
+// 			storageRef.put(file);
+// 			storageRef.getDownloadURL().then(function(url) {
+// 				var profileUrl = url;
+// 				// document.getElementById('image').value = "yesyes";
+// 			});
+// 		}
+// });
+// 
+// function profileValidate(){
+// 	var image = document.getElementById('profileButton');
+// 	var imageUploadPath = image.value;
+//
+// 	//To check if user upload any file
+// 	if (imageUploadPath != '') {
+// 		var extension = imageUploadPath.substring(
+// 			imageUploadPath.lastIndexOf('.') + 1).toLowerCase();
+//
+// 			//The file uploaded is an image
+// 			if (extension == "gif" || extension == "png" || extension == "bmp"
+// 			|| extension == "jpeg" || extension == "jpg") {
+// 				return true;
+// 			}
+// 			return false;
+// 		}
+// 	}
 </script>
 <!-- end header-->
 @stop
@@ -255,15 +255,17 @@ async defer></script>
       <form id="contactForm" novalidate="" action="{{ url('/#contact') }}" enctype="multipart/form-data">
         {{ csrf_field() }}
         <div class="form-item">
-          <label for="“name”">Username</label>
-          <input id="name" type="text" placeholder="Username" style ="color:#d2d2d2" required/>
+          <input id="name" type="text" placeholder="Name" style ="color:#d2d2d2" required/>
         </div>
         <div class="form-item">
-          <input id="location" rows="5" placeholder="Location" style ="color:#d2d2d2" required/></input>
+          <input id="location" rows="5" placeholder="Location (City,State)" style ="color:#d2d2d2" required/></input>
         </div>
         <div class="form-item">
           <textarea id="message" rows="5" placeholder="Your Travel Story" style ="color:#d2d2d2" required/></textarea>
         </div>
+				<!-- <label>Profile Image</label>
+				<input type="file" value="upload" id="profileButton"/></br> -->
+				<label>Travelling Image</label>
         <input type="file" value="upload" id="fileButton"/></br>
         </br>
         <input type="button" value="Share!" id="shareButton"/></br>
@@ -296,6 +298,7 @@ async defer></script>
   firebase.initializeApp(config);
 
   var fileButton = document.getElementById('fileButton');
+	var profileButton = document.getElementById('profileButton');
   var shareButton = document.getElementById('shareButton');
 	var usernameInput = document.getElementById('name');
 
@@ -315,10 +318,10 @@ async defer></script>
 	}
 
 
-  fileButton.addEventListener('change',function(e){
+  fileButton.addEventListener('change',function(t_image){
     shareButton.addEventListener('click',function(){
 				if(checkLogin() && imageValidate()){
-					var file = e.target.files[0];
+					var file = t_image.target.files[0];
 					var storageRef = firebase.storage().ref(file.name);
 					var message = document.getElementById('message').value;
 					var imageLocation = document.getElementById('location').value;
