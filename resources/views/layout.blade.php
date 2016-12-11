@@ -44,6 +44,14 @@
         fjs.parentNode.insertBefore(js, fjs);
       }(document, 'script', 'facebook-jssdk'));</script>
       <script src="js/index.js"></script>
+      <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-88826309-1', 'auto');
+      ga('send', 'pageview');
+      </script>
       <header id="banner" class="navbar navbar-default navbar-fixed-top">
         <div class="container"><a href="#top" class="scrollable"><img src="https://s31.postimg.org/67g2pvv7f/Screen_Shot_2016_06_26_at_3_46_05_PM.png" alt="trip logo" title="trip logo"/></a>
           <button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
@@ -73,7 +81,7 @@
 
       <!-- @yield('feedback') -->
       @yield('footer')
-      
+
       <!-- Google Translator -->
       @yield('translate')
     </body>

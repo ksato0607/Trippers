@@ -153,7 +153,7 @@ main section#contact>div>div p{margin:70px auto 0;max-width:700px;
   #portfolio .grid li{max-width:420px;
   }
 }
-#portfolio img{max-width:100%;height:auto;display:block;
+#portfolio img{max-width:100%; height:auto; background-size:cover; display:block;
 }
 form{
   width:80%;

@@ -191,7 +191,7 @@ function attachLocation(marker, url, address) {
 var modal = document.getElementById("myModal");
 function popupImage(url,story){
     modal.style.display = "block";
-    document.getElementById("disp").innerHTML = "<center> <img src=" + url + " width=80%><br/><br/>"
+    document.getElementById("disp").innerHTML = "<center> <img src=" + url + " width=70%><br/><br/>"
     + story + "</center>";
 }
 
