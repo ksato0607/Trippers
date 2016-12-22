@@ -342,14 +342,6 @@ hr.star-dark:after{color:#888;background-color:#eee;
     padding-left: 10px;
   }}
 
-  #quote {
-    position: absolute;
-    top: 100px;
-    left: 50%;
-    z-index: 5;
-    font-size: 70px;
-  }
-
   #startJourney{
     position: absolute;
     top: 500px;
@@ -369,15 +361,6 @@ hr.star-dark:after{color:#888;background-color:#eee;
       color: #fff;
     }
   }
-
-  @media(max-width:768px){
-  #quote {
-    position: absolute;
-    top: 100px;
-    left: 50%;
-    z-index: 5;
-    font-size: 30px;
-  }}
 
   #validationSuccess, #validationFail{
     display: none;

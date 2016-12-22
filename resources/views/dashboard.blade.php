@@ -4,9 +4,9 @@
 <li><a href="#map" class="scrollable">Map</a></li>
 <li><a href="#portfolio" class="scrollable">New</a></li>
 <li><a href="#contact" class="scrollable">Share</a></li>
-<li id="loggedin"><a onclick="popupLogin()">Login</a></li>
+<!-- <li id="loggedin"><a onclick="popupLogin()">Login</a></li> -->
 
-<div id = "loginModal" class = "modal">
+<!-- <div id = "loginModal" class = "modal">
 <div class = "modal-content">
 <div class="row">
 <div class="col-md-6">
@@ -39,7 +39,7 @@
 		<div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
 			<label for="password">password</label>
 			<input class="form-control" type="password" name="password" id="password" value="{{ Request::old('password') }}">
-		</div>
+		</div> -->
 		<!-- <div class="form-group {{ $errors->has('profileImage') ? 'has-error' : '' }}">
 			<label for="profileUrl">Profile Image</label>
 			<input type="file" name="profileUrl"　id="profileButton" title=" " value=""/>
@@ -47,30 +47,30 @@
 		<!-- <div class="form-group">
 			<input type="text" name="image" id="image" value="hi"/>
 		</div> -->
-			<button type="submit" class="btn btn-primary" id="submit">Submit</button>
+			<!-- <button type="submit" class="btn btn-primary" id="submit">Submit</button>
 			<input type="hidden" name="_token" value="{{ Session::token() }}">
 	</form>
 </div>
 </div>
-</div>
+</div> -->
 
 <script>
-//When login is failed, error message will be displayed
-@if($login)
-document.getElementById("loginModal").style.display = "block";
-document.getElementById("errorMessage").style.display = "block";
-@endif
-
-// login button is clicked
-function popupLogin(){
-	document.getElementById("loginModal").style.display = "block";
-	document.getElementById("errorMessage").style.display = "none";
-}
-
-// login button is changed to logout when a user is logged in
-@if(Auth::user())
-document.getElementById("loggedin").innerHTML = '<a href="{{ route('logout') }}">Logout</a>';
-@endif
+// //When login is failed, error message will be displayed
+// @if($login)
+// document.getElementById("loginModal").style.display = "block";
+// document.getElementById("errorMessage").style.display = "block";
+// @endif
+//
+// // login button is clicked
+// function popupLogin(){
+// 	document.getElementById("loginModal").style.display = "block";
+// 	document.getElementById("errorMessage").style.display = "none";
+// }
+//
+// // login button is changed to logout when a user is logged in
+// @if(Auth::user())
+// document.getElementById("loggedin").innerHTML = '<a href="{{ route('logout') }}">Logout</a>';
+// @endif
 
 // profile image is uploaded to firebase and get the url
 //var profileButton = document.getElementById('profileButton');
@@ -111,9 +111,7 @@ document.getElementById("loggedin").innerHTML = '<a href="{{ route('logout') }}"
 
 <!-- Adding Top Image-->
 @section('topImage')
-<img id="topImage" src="https://firebasestorage.googleapis.com/v0/b/laravel-659e1.appspot.com/o/pexels-photo-109917.jpeg?alt=media&token=66bdd20e-7ed5-4341-af16-b5da5119f7d6"/>
-<p id="quote">If you can go anywhere, where would you like to go?</>
-<a id="startJourney" href="#map" class="scrollable">Start your journey here</a>
+<a href="#map" class="scrollable"> <img id="topImage" src="https://firebasestorage.googleapis.com/v0/b/laravel-659e1.appspot.com/o/pexels-photo-109917.jpg?alt=media&token=abda039d-28ef-4d7b-95f1-3c9c317614ff" style="width: 100%;"/> </a>
 @stop
 
 <!-- Adding Map -->
@@ -326,6 +324,7 @@ async defer></script>
 					var message = document.getElementById('message').value;
 					var imageLocation = document.getElementById('location').value;
 					storageRef.put(file);
+					var abc;
 					storageRef.getDownloadURL().then(function(url) {
 						var imageUrl = url;
 						$.get("/test?url=" + imageUrl + '&message='+message + '&location=' + imageLocation);
