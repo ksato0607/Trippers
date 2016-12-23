@@ -173,8 +173,8 @@ function initMap() {
 
 function attachLocation(marker, url, address) {
   var infowindow = new google.maps.InfoWindow({
-    content: "<img src=" + url + " width=150px> " + "<br/>"+ address
-    //disableAutoPan: true
+    content: "<img src=" + url + " width=150px> " + "<br/>"+ address,
+    disableAutoPan: true
   });
 
   marker.addListener('mouseover', function() {
@@ -192,14 +192,6 @@ function popupImage(url,story){
     document.getElementById("disp").innerHTML = "<center> <img src=" + url + " width=70%><br/><br/>"
     + story + "</center>";
 }
-
-// window.onclick = function(event)
-// {
-// 	if(event.target == modal)
-// 	{
-// 		modal.style.display = "none";
-// 	}
-// }
 
 $(window).on('click touchstart', function(event){
 	if(event.target == modal)
