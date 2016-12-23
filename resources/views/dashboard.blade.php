@@ -223,10 +223,10 @@ async defer></script>
 		@foreach ($database as $data)
 		<li><img src="{{ $data->imageUrl }}" alt="image not available">
 			<div class="row">
-			<div class="col-md-10">
+			<div class="col-md-10 col-xs-9">
 				<font color="#666"> {{$data->imageStory}} </br>-{{$data->imageLocation}} </font>
 			</div>
-			<div class="col-md-2">
+			<div class="col-md-2 col-xs-3">
 				<img id="travellers" src="{{ $data->profileUrl}}"></img>
 			</div>
 		</div>
