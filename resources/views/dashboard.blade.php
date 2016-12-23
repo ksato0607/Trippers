@@ -191,8 +191,13 @@ if ($(window).width() >= 768){
 var modal = document.getElementById("myModal");
 function popupImage(url,story){
     modal.style.display = "block";
-    document.getElementById("disp").innerHTML = "<center> <img src=" + url + " width=70%><br/><br/>"
-    + story + "</center>";
+		if ($(window).width() < 768){
+			document.getElementById("disp").innerHTML = "<center> <img src=" + url + " width=90%><br/><br/>"
+	    + story + "</center>";
+		} else {
+			document.getElementById("disp").innerHTML = "<center> <img src=" + url + " width=70%><br/><br/>"
+	    + story + "</center>";
+		}
 }
 
 $(window).on('click touchstart', function(event){

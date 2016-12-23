@@ -313,6 +313,16 @@ hr.star-dark:after{color:#888;background-color:#eee;
   	width: 70%;
   }
 
+  @media(max-width:768px){
+    .modal-content {
+    	background-color: #fefefe;
+    	margin: auto;
+    	padding: 5px;
+    	border: 1px solid #888;
+    	width: 90%;
+    }
+  }
+
   #floating-panel {
     position: absolute;
     top: 110%;
