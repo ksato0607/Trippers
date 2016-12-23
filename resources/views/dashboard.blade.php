@@ -177,9 +177,11 @@ function attachLocation(marker, url, address) {
     disableAutoPan: true
   });
 
+if ($(window).width() >= 768){
   marker.addListener('mouseover', function() {
     infowindow.open(marker.get('map'), marker);
   });
+}
 
   marker.addListener('mouseout', function() {
     infowindow.close(marker.get('map'), marker);
