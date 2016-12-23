@@ -18,6 +18,7 @@ class CreateTblImagesTable extends Migration
             $table->string("imageUrl");
             $table->string("imageLocation");
             $table->string("imageStory");
+            $table->string("profileUrl");
             $table->timestamps();
         });
     }

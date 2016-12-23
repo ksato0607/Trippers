@@ -193,15 +193,20 @@ function popupImage(url,story){
     + story + "</center>";
 }
 
-window.onclick = function(event)
-{
+// window.onclick = function(event)
+// {
+// 	if(event.target == modal)
+// 	{
+// 		modal.style.display = "none";
+// 	}
+// }
+
+$(window).on('click touchstart', function(event){
 	if(event.target == modal)
 	{
 		modal.style.display = "none";
-	} else if (event.target == document.getElementById("loginModal")){
-		document.getElementById("loginModal").style.display = "none";
 	}
-}
+});
 
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoCNaVtm5v0u6cQ5FOxBBhkSIQ0LiZJXc&callback=initMap"
