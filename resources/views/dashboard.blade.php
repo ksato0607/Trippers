@@ -218,7 +218,7 @@ async defer></script>
 @section('new')
 <section id="portfolio">
 	<br/>
-  <h2>New Location</h2>
+  <h2 style="color:#ff5722">New Location</h2>
   <ul class="grid">
 		@foreach ($database as $data)
 		<li><img src="{{ $data->imageUrl }}" alt="image not available">
@@ -365,7 +365,7 @@ async defer></script>
 @section('footer')
 <!-- Footer-->
 <footer>
-	<div id="footer-above">
+	<div id="footer-above" style="color: #ff5722">
 		<div>
 			<h3>Would you like to give us feedback? <a onclick="popupEmail()">Email Us</a></h3>
 		</div>
@@ -395,7 +395,7 @@ async defer></script>
 <script>
 function popupEmail(){
 	document.getElementById("myModal").style.display = "block";
-	document.getElementById("disp").innerHTML = '<form id="contactForm" action="{{route('sendmail')}}" method="post"><div class="form-item"><input type="email" name="mail" placeholder="email address"></div><div class="form-item"><input type="text" name="name" placeholder="enter your name"></div><div class="form-item"><input type ="tel" name="phone" placeholder="phone number"></div><div class="form-item"><input type ="text" name="title" placeholder="email title"></div><div class="form-item"><textarea placeholder="Message" row="10" name ="body"></textarea></div><button type="submit">Contact Us</button>{{ csrf_field() }}</form>';
+	document.getElementById("disp").innerHTML = '<form id="contactForm" style="background-color: #ff5722;" action="{{route('sendmail')}}" method="post"><div class="form-item"><input type="email" name="mail" placeholder="email address"></div><div class="form-item"><input type="text" name="name" placeholder="enter your name"></div><div class="form-item"><input type ="tel" name="phone" placeholder="phone number"></div><div class="form-item"><input type ="text" name="title" placeholder="email title"></div><div class="form-item"><textarea placeholder="Message" row="10" name ="body"></textarea></div><button type="submit" id="shareButton">Contact Us</button>{{ csrf_field() }} </br></br></form>';
 }
 </script>
 @stop
