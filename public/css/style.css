@@ -105,7 +105,7 @@ nav{
 }
 
 /*Disable Scrolling Horizontally from mobile*/
-@media screen and (max-width: 768px) {
+@media (max-width: 768px) {
     body {
         overflow-x: hidden !important;
     }
@@ -354,26 +354,6 @@ hr.star-dark:after{color:#888;background-color:#eee;
     	padding: 5px;
     	border: 1px solid #888;
     	width: 90%;
-    }
-  }
-
-  #startJourney{
-    position: absolute;
-    top: 500px;
-    right: 0%;
-    z-index: 5;
-    font-size: 30px;
-    color: #fff;
-  }
-
-  @media(max-width:768px){
-    #startJourney{
-      position: absolute;
-      top: 250px;
-      right: 0%;
-      z-index: 5;
-      font-size: 18px;
-      color: #fff;
     }
   }
 
