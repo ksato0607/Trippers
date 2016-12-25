@@ -237,14 +237,11 @@ async defer></script>
 @stop
 
 @section('share')
-<section id="contact"  style="background-color:#1e1e1e;">
+<section id="contact"  style="background-color:rgba(255, 87, 34, 0.94); color:#fff;">
     <br/>
     <h2 style="color:#fff">Share Your Travel Experience</h2>
     <hr class="style-white"/>
       <div class="container">
-      <div class="panel panel-primary">
-      <div class="panel-body">
-
         <div class="alert alert-danger" id="validationFail">
           <strong>Whoops!</strong> There were some problems with your input.
         </div>
@@ -257,20 +254,20 @@ async defer></script>
       <form id="contactForm" novalidate="" action="{{ url('/#contact') }}" enctype="multipart/form-data">
         {{ csrf_field() }}
         <div class="form-item">
-          <input id="name" type="text" placeholder="Name" style ="color:#d2d2d2" required/>
+          <input id="name" type="text" placeholder="Name" required/>
         </div>
         <div class="form-item">
-          <input id="location" rows="5" placeholder="Location (City,State)" style ="color:#d2d2d2" required/></input>
+          <input id="location" rows="5" placeholder="Location (City,State)" required/></input>
         </div>
         <div class="form-item">
-          <textarea id="message" rows="5" placeholder="Your Travel Story" style ="color:#d2d2d2" required/></textarea>
+          <textarea id="message" rows="5" placeholder="Your Travel Story" required/></textarea>
         </div>
 				<!-- <label>Profile Image</label>
 				<input type="file" value="upload" id="profileButton"/></br> -->
 				<label>Travelling Image</label>
         <input type="file" value="upload" id="fileButton"/></br>
         </br>
-        <input type="button" value="Share!" id="shareButton"/></br>
+        <input type="button" value="Share!" id="shareButton" style="background-color:#ff5722"/></br>
       </br>
       </form>
 			<div id="form_text">
@@ -278,8 +275,6 @@ async defer></script>
 					<strong> Do you like travelling? </br> Do you have some cool pictures? </br> Share your story to the world! </strong>
 				</p> -->
 			</div>
-    </div>
-  </div>
 </div>
   </br>
   </section>

@@ -83,8 +83,12 @@ nav{
   transition:all .3s;
 }
 
+.navbar-custom {
+    color: #ff5722;
+}
+
 .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus {
-    color: #000 !important;
+    color: #333 !important;
     background-color: #fff !important;
 }
 
@@ -166,7 +170,7 @@ form .row:first-child .form-item{border-top:1px solid #fff;
 }
 .form-item{position:relative;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #bbb;
 }
-.form-item input, .form-item textarea{z-index:1;position:relative;padding-right:0;padding-left:0;border:0;border-radius:0;font-size:1.5em;background:0 0;box-shadow:none!important;resize:none;width:100%;
+.form-item input, .form-item textarea{z-index:1;position:relative;padding-right:0;padding-left:0;border:0;border-radius:0;font-size:1.5em;background:0 0;box-shadow:none!important;resize:none;width:100%; color:#fff;
 }
 .form-item input:focus, .form-item textarea:focus{outline:0
 }
@@ -176,6 +180,10 @@ form .row:first-child .form-item{border-top:1px solid #fff;
 }
 .form-item-focused label{color:#722872;
 }
+::-webkit-input-placeholder {
+   color: #fff;
+}
+
 footer{
   color:#000;
   background-color:#fff;
