@@ -163,7 +163,7 @@ function initMap() {
       });
       attachLocation(marker, url, address);
       marker.addListener('click', function() {
-            popupImage(url,story);
+            popupImage(url,story,address);
       });
     } else {
       alert('Geocode was not successful for the following reason: ' + status);
@@ -189,14 +189,14 @@ if ($(window).width() >= 768){
 }
 
 var modal = document.getElementById("myModal");
-function popupImage(url,story){
+function popupImage(url,story,address){
     modal.style.display = "block";
 		if ($(window).width() < 768){
 			document.getElementById("disp").innerHTML = "<center> <img src=" + url + " width=90%><br/><br/>"
-	    + story + "</center>";
+	    + story + "<br/>-" + address + "</center>";
 		} else {
 			document.getElementById("disp").innerHTML = "<center> <img src=" + url + " width=70%><br/><br/>"
-	    + story + "</center>";
+	    + story + "<br/>-" + address + "</center>";
 		}
 }
 
@@ -382,7 +382,7 @@ async defer></script>
 				<li><a target="_blank" href="https://github.com/ksato0607/Trippers" class="button social"><i class="fa fa-fw fa-github"></i></a></li>
 				<li><a target="_blank" href="https://twitter.com/trip_go_trip" class="button social"><i class="fa fa-fw fa-twitter"></i></a></li>
 			</ul>
-			<div class="fb-like" data-href="http://phplaravel-31991-69079-187106.cloudwaysapps.com/" data-layout="standard" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div>
+			<!-- <div class="fb-like" data-href="http://phplaravel-31991-69079-187106.cloudwaysapps.com/" data-layout="standard" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div> -->
 		</div>
 	</div>
 </div>
