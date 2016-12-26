@@ -5,6 +5,7 @@ body{
   background:#888;
   font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
   font-size:20px;
+  overflow-x: hidden !important;
 }
 
 hr.style-black {
@@ -63,6 +64,7 @@ footer #footer-above{
       -ms-flex-align:start;
           align-items:flex-start;
   margin:0 auto;
+  overflow-x: hidden !important;
 }
 #banner{
   background-color:#ffffff !important;
@@ -105,15 +107,9 @@ nav{
 }
 
 /*Disable Scrolling Horizontally from mobile*/
-@media (max-width: 768px) {
-    body {
-        overflow-x: hidden !important;
-    }
     .container {
         max-width: 100% !important;
-        overflow-x: hidden !important;
     }
-}
 
 @media(max-width:768px){
   nav{padding:5px;text-align:center;margin:0 auto;width:120%;
