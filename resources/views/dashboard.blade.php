@@ -328,13 +328,18 @@ async defer></script>
 						var file = document.getElementById('fileButton').files[0];
 						var storageRef = firebase.storage().ref(file.name);
 						storageRef.put(file);
+						alert("put is working");
+
 						storageRef.getDownloadURL().then(function(url) {
 							var imageUrl = url;
 							$.get("/test?url=" + imageUrl + '&message='+message + '&location=' + imageLocation);
 							$('#portfolio').load(document.URL +  ' #portfolio');
 							document.getElementById('validationSuccess').style.display = "block";
 							document.getElementById("contactForm").reset();
+							document.getElementById("shareButton").value = "Share!";
+							// document.getElementById("shareButton").value = "Share!";
 						});
+						alert("end is working");
 					}
 					else{
 						alert("true false callback is working");

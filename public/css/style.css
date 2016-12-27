@@ -247,7 +247,7 @@ footer h3{margin-bottom:10px;color:#ff5722;
 }
 .scroll-top a{background:#fff;
 }
-.scroll-top a:hover, .scroll-top a:focus{color:#722872;background-color:#fff;border-color:#722872;
+.scroll-top a:hover, .scroll-top a:focus{color:#ff5722;background-color:#fff;border-color:#ff5722;
 }
 @media(min-width:768px){
   .scroll-top a{visibility:hidden;
