@@ -333,6 +333,7 @@ async defer></script>
 							$.get("/test?url=" + imageUrl + '&message='+message + '&location=' + imageLocation);
 							$('#portfolio').load(document.URL +  ' #portfolio');
 							document.getElementById('validationSuccess').style.display = "block";
+							document.getElementById("contactForm").reset();
 						});
 					}
 					else{
