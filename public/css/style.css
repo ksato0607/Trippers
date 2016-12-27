@@ -106,11 +106,6 @@ nav{
     background-color: #fff !important;
 }
 
-/*Disable Scrolling Horizontally from mobile*/
-    .container {
-        max-width: 100% !important;
-    }
-
 @media(max-width:768px){
   nav{padding:5px;text-align:center;margin:0 auto;width:120%;
   }
@@ -298,6 +293,10 @@ hr.star-dark:after{color:#888;background-color:#eee;
     padding: 0px 25px;
   }
 
+  .alert{
+      width: 100%;
+  }
+
   #topImage{
     height: auto;
     max-width: 100%;
@@ -353,7 +352,7 @@ hr.star-dark:after{color:#888;background-color:#eee;
     }
   }
 
-  #validationSuccess, #validationFail{
+  #validationSuccess, #validationFail, #validationLocation{
     display: none;
   }
 

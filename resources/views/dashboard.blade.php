@@ -241,15 +241,22 @@ async defer></script>
     <br/>
     <h2 style="color:#fff">Share Your Travel Experience</h2>
     <hr class="style-white"/>
-      <div class="container">
-        <div class="alert alert-danger" id="validationFail">
-          <strong>Whoops!</strong> There were some problems with your input.
-        </div>
 
-        <div class="alert alert-success alert-block" id="validationSuccess">
-          <button type="button" class="close" data-dismiss="alert">×</button>
-          <strong>Image Uploaded successfully.</strong>
-        </div>
+      <div class="container">
+				<div class="alert alert-danger" id="validationFail">
+					<strong>Whoops!</strong>&nbsp There was a problem with file type.
+					<button type="button" class="close" data-dismiss="alert">×</button>
+				</div>
+
+				<div class="alert alert-success alert-block" id="validationSuccess">
+					<strong>Image Uploaded successfully.</strong>
+					<button type="button" class="close" data-dismiss="alert">×</button>
+				</div>
+
+				<div class="alert alert-danger" id="validationLocation">
+					<strong>Whoops!</strong>&nbsp There was a problem with location.
+					<button type="button" class="close" data-dismiss="alert">×</button>
+				</div>
 
       <form id="contactForm" novalidate="" action="{{ url('/#contact') }}" enctype="multipart/form-data">
         {{ csrf_field() }}
@@ -267,23 +274,18 @@ async defer></script>
 				<label>Travelling Image</label>
         <input type="file" value="upload" id="fileButton"/></br>
         </br>
-        <input type="button" value="Share!" id="shareButton" style="background-color:#ff5722"/></br>
+        <input type="button" value="Share!" id="shareButton" style="background-color:#ff5722" onclick="validateInput()"/></br>
       </br>
       </form>
-			<div id="form_text">
-				<!-- <p style ="color:rgba(255, 152, 0, 0.73)">
-					<strong> Do you like travelling? </br> Do you have some cool pictures? </br> Share your story to the world! </strong>
-				</p> -->
-			</div>
 </div>
   </br>
   </section>
   <script src="https://www.gstatic.com/firebasejs/3.5.3/firebase.js"></script>
   <script>
-  if(localStorage.validationSuccess=="TRUE"){
-    document.getElementById('validationSuccess').style.display = "block";
-    localStorage.setItem("validationSuccess", "FALSE");
-  }
+  // if(localStorage.validationSuccess=="TRUE"){
+  //   document.getElementById('validationSuccess').style.display = "block";
+  //   localStorage.setItem("validationSuccess", "FALSE");
+  // }
   // Initialize Firebase
   var config = {
     apiKey: "AIzaSyDOwreQX85mVM0k6M4bdK21SLZ-NY-J484",
@@ -314,27 +316,61 @@ async defer></script>
 	// 	@endif
 	// }
 
+	function validateInput(){
+		var message = document.getElementById('message').value;
+		var imageLocation = document.getElementById('location').value;
 
-  fileButton.addEventListener('change',function(t_image){
-    shareButton.addEventListener('click',function(){
-				if(imageValidate()){
-					var file = t_image.target.files[0];
-					var storageRef = firebase.storage().ref(file.name);
-					var message = document.getElementById('message').value;
-					var imageLocation = document.getElementById('location').value;
-					storageRef.put(file);
-					var abc;
-					storageRef.getDownloadURL().then(function(url) {
-						var imageUrl = url;
-						$.get("/test?url=" + imageUrl + '&message='+message + '&location=' + imageLocation);
-						localStorage.setItem("validationSuccess", "TRUE");
-						location.reload(); //To update database on our web
-					});
-				}
-    });
-  });
+		locationValidate(imageLocation, function(results) {
+			if (results) {
+				imageValidate(function(ImageResults) {
+					if (ImageResults) {
+						alert("true true callback is working");
+						var file = document.getElementById('fileButton').files[0];
+						var storageRef = firebase.storage().ref(file.name);
+						storageRef.put(file);
+						storageRef.getDownloadURL().then(function(url) {
+							var imageUrl = url;
+							$.get("/test?url=" + imageUrl + '&message='+message + '&location=' + imageLocation);
+							$('#portfolio').load(document.URL +  ' #portfolio');
+							document.getElementById('validationSuccess').style.display = "block";
+						});
+					}
+					else{
+						alert("true false callback is working");
+					}
+				});
+			}
+			else {
+				alert("false callback is working");
+			}
+});
 
-      function imageValidate(){
+			// var file = t_image.target.files[0];
+			// var storageRef = firebase.storage().ref(file.name);
+			// storageRef.put(file);
+			// storageRef.getDownloadURL().then(function(url) {
+			// 	var imageUrl = url;
+			// 	$.get("/test?url=" + imageUrl + '&message='+message + '&location=' + imageLocation);
+			// 	$('#portfolio').load(document.URL +  ' #portfolio');
+			// 	document.getElementById('validationSuccess').style.display = "block";
+			// });
+	}
+
+		function locationValidate(imageLocation, callback){
+				var geocoder = new google.maps.Geocoder();
+				//Check if imageLocation is valid
+				geocoder.geocode({'address': imageLocation}, function(results, status) {
+					if (status !== 'OK') {
+						document.getElementById('validationLocation').style.display = "block";
+						callback(null);
+					}
+					else {
+						callback(results);
+					}
+				});
+			}
+
+      function imageValidate(callback){
         var image = document.getElementById('fileButton');
         var imageUploadPath = image.value;
 
@@ -346,15 +382,16 @@ async defer></script>
             //The file uploaded is an image
             if (extension == "gif" || extension == "png" || extension == "bmp"
             || extension == "jpeg" || extension == "jpg") {
-              document.getElementById('validationSuccess').style.display = "block";
+              // document.getElementById('validationSuccess').style.display = "block";
               document.getElementById('validationFail').style.display = "none";
-              return true;
+							document.getElementById('validationLocation').style.display = "none";
+							callback("true");
             }
             //The file upload is NOT an image
             else {
               document.getElementById('validationFail').style.display = "block";
               document.getElementById('validationSuccess').style.display = "none";
-              return false;
+              callback(null);
             }
           }
         }
