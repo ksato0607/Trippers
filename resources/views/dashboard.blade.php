@@ -274,7 +274,15 @@ async defer></script>
 				<label>Travelling Image</label>
         <input type="file" value="upload" id="fileButton"/></br>
         </br>
-        <input type="button" value="Share!" id="shareButton" style="background-color:#ff5722" onclick="validateInput()"/></br>
+				<div class="row">
+					<div class="col-xs-6">
+					<input type="button" value="Share!" id="shareButton" style="background-color:#ff5722" onclick="validateInput()"/>
+					</div>
+					<div class="col-xs-6">
+					<div class="loader" id="loader"></div>
+					</div>
+				</div>
+			</br>
       </br>
       </form>
 </div>
@@ -317,7 +325,6 @@ async defer></script>
 	// }
 
 	function validateInput(){
-		var message = document.getElementById('message').value;
 		var imageLocation = document.getElementById('location').value;
 
 		locationValidate(imageLocation, function(results) {
@@ -325,21 +332,8 @@ async defer></script>
 				imageValidate(function(ImageResults) {
 					if (ImageResults) {
 						alert("true true callback is working");
-						var file = document.getElementById('fileButton').files[0];
-						var storageRef = firebase.storage().ref(file.name);
-						storageRef.put(file);
-						alert("put is working");
-
-						storageRef.getDownloadURL().then(function(url) {
-							var imageUrl = url;
-							$.get("/test?url=" + imageUrl + '&message='+message + '&location=' + imageLocation);
-							$('#portfolio').load(document.URL +  ' #portfolio');
-							document.getElementById('validationSuccess').style.display = "block";
-							document.getElementById("contactForm").reset();
-							document.getElementById("shareButton").value = "Share!";
-							// document.getElementById("shareButton").value = "Share!";
-						});
-						alert("end is working");
+						loadFunction();
+						firebaseUpload();
 					}
 					else{
 						alert("true false callback is working");
@@ -360,6 +354,36 @@ async defer></script>
 			// 	$('#portfolio').load(document.URL +  ' #portfolio');
 			// 	document.getElementById('validationSuccess').style.display = "block";
 			// });
+	}
+
+	//Display loader
+	function loadFunction() {
+		document.getElementById("loader").style.display = "block";
+		var myVar = setTimeout(showPage, 5000);
+	}
+
+	//Hide loader
+	function showPage() {
+		if(document.getElementById("loader").style.display == "block"){
+			alert("showpage is working");
+			firebaseUpload();
+		}
+	}
+
+	function firebaseUpload(){
+		var message = document.getElementById('message').value;
+		var imageLocation = document.getElementById('location').value;
+		var file = document.getElementById('fileButton').files[0];
+		var storageRef = firebase.storage().ref(file.name);
+		storageRef.put(file);
+		storageRef.getDownloadURL().then(function(url) {
+			var imageUrl = url;
+			$.get("/test?url=" + imageUrl + '&message='+message + '&location=' + imageLocation);
+			$('#portfolio').load(document.URL +  ' #portfolio');
+			document.getElementById('validationSuccess').style.display = "block";
+			document.getElementById("contactForm").reset();
+			document.getElementById("loader").style.display = "none";
+		});
 	}
 
 		function locationValidate(imageLocation, callback){
@@ -401,8 +425,7 @@ async defer></script>
             }
           }
         }
-</SCRIPT>
-  </script>
+</script>
 @stop
 
 @section('footer')
@@ -438,7 +461,7 @@ async defer></script>
 <script>
 function popupEmail(){
 	document.getElementById("myModal").style.display = "block";
-	document.getElementById("disp").innerHTML = '<form id="contactForm" style="background-color: #ff5722;" action="{{route('sendmail')}}" method="post"><div class="form-item"><input type="email" name="mail" placeholder="email address"></div><div class="form-item"><input type="text" name="name" placeholder="enter your name"></div><div class="form-item"><input type ="tel" name="phone" placeholder="phone number"></div><div class="form-item"><input type ="text" name="title" placeholder="email title"></div><div class="form-item"><textarea placeholder="Message" row="10" name ="body"></textarea></div><button type="submit" id="shareButton">Contact Us</button>{{ csrf_field() }} </br></br></form>';
+	document.getElementById("disp").innerHTML = '<form id="contactForm" style="background-color: #ff5722;" action="{{route('sendmail')}}" method="post"><div class="form-item"><input type="email" name="mail" placeholder="email address"></div><div class="form-item"><input type="text" name="name" placeholder="enter your name"></div><div class="form-item"><input type ="tel" name="phone" placeholder="phone number"></div><div class="form-item"><input type ="text" name="title" placeholder="email title"></div><div class="form-item"><textarea placeholder="Message" row="10" name ="body"></textarea></div><button type="submit" id="emailButton">Contact Us</button>{{ csrf_field() }} </br></br></form>';
 }
 </script>
 @stop
