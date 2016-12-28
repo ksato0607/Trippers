@@ -53,7 +53,7 @@
       ga('send', 'pageview');
       </script>
       <header id="banner" class="navbar navbar-default navbar-fixed-top">
-        <div class="container"><a href="#top" class="scrollable"><img src="https://s31.postimg.org/67g2pvv7f/Screen_Shot_2016_06_26_at_3_46_05_PM.png" alt="trip logo" title="trip logo"/></a>
+        <div class="container"><a href="#top" class="scrollable"><img id="logo" src="https://firebasestorage.googleapis.com/v0/b/laravel-659e1.appspot.com/o/logo4.png?alt=media&token=96e1ae09-61f8-4f52-8885-77fbfea2c92d" alt="trip logo" title="trip logo"/></a>
           <button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
           <nav id="navbar" role="navigation" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">

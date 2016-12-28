@@ -333,7 +333,7 @@ hr.star-dark:after{color:#888;background-color:#eee;
   .modal {
   	position: fixed;
   	z-index: 5;
-  	padding-top: 70px;
+  	padding-top: 50px;
   	left: 0;
   	top: 0;
   	width: 100%;
@@ -391,3 +391,7 @@ hr.star-dark:after{color:#888;background-color:#eee;
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+
+#logo{
+  margin: 20px;
+}

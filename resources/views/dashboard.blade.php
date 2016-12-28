@@ -111,7 +111,7 @@
 
 <!-- Adding Top Image-->
 @section('topImage')
-<a href="#map" class="scrollable"> <img id="topImage" src="https://firebasestorage.googleapis.com/v0/b/laravel-659e1.appspot.com/o/pexels-photo-109917.jpg?alt=media&token=abda039d-28ef-4d7b-95f1-3c9c317614ff" style="width: 100%;"/> </a>
+<a href="#map" class="scrollable"> <img id="topImage" src="https://firebasestorage.googleapis.com/v0/b/laravel-659e1.appspot.com/o/shoesJumpNewText.jpg?alt=media&token=d45cadeb-a518-4c76-930b-65633664c197" style="width: 100%;"/> </a>
 @stop
 
 <!-- Adding Map -->
