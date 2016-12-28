@@ -166,7 +166,7 @@ function initMap() {
             popupImage(url,story,address);
       });
     } else {
-      alert('Geocode was not successful for the following reason: ' + status);
+      //alert('Geocode was not successful for the following reason: ' + status);
     }
   });
 }
@@ -218,21 +218,21 @@ async defer></script>
 @section('new')
 <section id="portfolio">
 	<br/>
-  <h2 style="color:#ff5722">New Location</h2>
-  <ul class="grid">
+	<h2 style="color:#ff5722">New Location</h2>
+	<ul class="grid">
 		@foreach ($database as $data)
-		<li><img src="{{ $data->imageUrl }}" alt="image not available">
+		<li><img id="travelImage" src="{{ $data->imageUrl }}" alt="image not available">
 			<div class="row">
-			<div class="col-md-10 col-xs-9">
-				<font color="#666"> {{$data->imageStory}} </br>-{{$data->imageLocation}} </font>
+				<div class="col-md-10 col-xs-9">
+					<font color="#666"> {{$data->imageStory}} </br>-{{$data->imageLocation}} </font>
+				</div>
+				<div class="col-md-2 col-xs-3">
+					<img id="travellers" src="{{ $data->profileUrl}}"></img>
+				</div>
 			</div>
-			<div class="col-md-2 col-xs-3">
-				<img id="travellers" src="{{ $data->profileUrl}}"></img>
-			</div>
-		</div>
-	</li>
+		</li>
 		@endforeach
-  </ul>
+	</ul>
 </section>
 @stop
 
@@ -269,8 +269,8 @@ async defer></script>
         <div class="form-item">
           <textarea id="message" rows="5" placeholder="Your Travel Story" required/></textarea>
         </div>
-				<!-- <label>Profile Image</label>
-				<input type="file" value="upload" id="profileButton"/></br> -->
+				<label>Your Profile Image</label>
+				<input type="file" value="upload" id="profileButton"/></br>
 				<label>Travelling Image</label>
         <input type="file" value="upload" id="fileButton"/></br>
         </br>
@@ -290,10 +290,7 @@ async defer></script>
   </section>
   <script src="https://www.gstatic.com/firebasejs/3.5.3/firebase.js"></script>
   <script>
-  // if(localStorage.validationSuccess=="TRUE"){
-  //   document.getElementById('validationSuccess').style.display = "block";
-  //   localStorage.setItem("validationSuccess", "FALSE");
-  // }
+
   // Initialize Firebase
   var config = {
     apiKey: "AIzaSyDOwreQX85mVM0k6M4bdK21SLZ-NY-J484",
@@ -331,29 +328,19 @@ async defer></script>
 			if (results) {
 				imageValidate(function(ImageResults) {
 					if (ImageResults) {
-						alert("true true callback is working");
+						//alert("true true callback is working");
 						loadFunction();
 						firebaseUpload();
 					}
 					else{
-						alert("true false callback is working");
+						//alert("true false callback is working");
 					}
 				});
 			}
 			else {
-				alert("false callback is working");
+				//alert("false callback is working");
 			}
-});
-
-			// var file = t_image.target.files[0];
-			// var storageRef = firebase.storage().ref(file.name);
-			// storageRef.put(file);
-			// storageRef.getDownloadURL().then(function(url) {
-			// 	var imageUrl = url;
-			// 	$.get("/test?url=" + imageUrl + '&message='+message + '&location=' + imageLocation);
-			// 	$('#portfolio').load(document.URL +  ' #portfolio');
-			// 	document.getElementById('validationSuccess').style.display = "block";
-			// });
+		});
 	}
 
 	//Display loader
@@ -365,7 +352,7 @@ async defer></script>
 	//Hide loader
 	function showPage() {
 		if(document.getElementById("loader").style.display == "block"){
-			alert("showpage is working");
+			firebaseUpload();
 			firebaseUpload();
 		}
 	}
@@ -373,17 +360,31 @@ async defer></script>
 	function firebaseUpload(){
 		var message = document.getElementById('message').value;
 		var imageLocation = document.getElementById('location').value;
+
+		//For location image
 		var file = document.getElementById('fileButton').files[0];
 		var storageRef = firebase.storage().ref(file.name);
+		var imageUrl;
+
+		//For profile image
+		var profile = document.getElementById('profileButton').files[0];
+		var storageRef_profile = firebase.storage().ref(profile.name);
+		var profileUrl;
+
 		storageRef.put(file);
 		storageRef.getDownloadURL().then(function(url) {
-			var imageUrl = url;
-			$.get("/test?url=" + imageUrl + '&message='+message + '&location=' + imageLocation);
+			imageUrl = url;
+		}).then(function(){
+			storageRef_profile.put(profile);
+			storageRef_profile.getDownloadURL().then(function(profile_url) {
+			profileUrl = profile_url;
+			}).then(function(){
+			$.get("/test?url=" + imageUrl + '&message='+message + '&location=' + imageLocation + '&profileUrl=' + profileUrl);
 			$('#portfolio').load(document.URL +  ' #portfolio');
 			document.getElementById('validationSuccess').style.display = "block";
 			document.getElementById("contactForm").reset();
 			document.getElementById("loader").style.display = "none";
-		});
+		});});
 	}
 
 		function locationValidate(imageLocation, callback){
@@ -433,9 +434,6 @@ async defer></script>
 <footer>
 	<div id="footer-above" style="color: #ff5722">
 		<div>
-			<h3>Would you like to give us feedback? <a onclick="popupEmail()">Email Us</a></h3>
-		</div>
-		<div>
 			<h3>Travellers</h3>
 			@foreach ($database as $data)
 			<img id="travellers" src="{{$data->profileUrl}}"></img>
@@ -448,6 +446,8 @@ async defer></script>
 				<li><a target="_blank" href="https://github.com/ksato0607/Trippers" class="button social"><i class="fa fa-fw fa-github"></i></a></li>
 				<li><a target="_blank" href="https://twitter.com/trip_go_trip" class="button social"><i class="fa fa-fw fa-twitter"></i></a></li>
 			</ul>
+		</br>
+			<h3>Would you like to give us feedback? <a onclick="popupEmail()" style="color: #cddc39">Email Us</a></h3>
 			<!-- <div class="fb-like" data-href="http://phplaravel-31991-69079-187106.cloudwaysapps.com/" data-layout="standard" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div> -->
 		</div>
 	</div>

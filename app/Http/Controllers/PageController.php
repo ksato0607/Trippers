@@ -16,8 +16,8 @@ class PageController extends Controller
 
     public function databasePost()
     {
-      if(isset($_REQUEST["url"]) &&isset($_REQUEST["message"]) &&isset($_REQUEST["location"])){
-      DB::table('tblImages')->insert(['imageUrl' => $_REQUEST["url"], 'imageStory'=>$_REQUEST["message"], 'imageLocation'=>$_REQUEST["location"]]);
+      if(isset($_REQUEST["url"]) &&isset($_REQUEST["message"]) &&isset($_REQUEST["location"]) &&isset($_REQUEST["profileUrl"])){
+      DB::table('tblImages')->insert(['imageUrl' => $_REQUEST["url"], 'imageStory'=>$_REQUEST["message"], 'imageLocation'=>$_REQUEST["location"], 'profileUrl' => $_REQUEST["profileUrl"]]);
       }
     }
 
