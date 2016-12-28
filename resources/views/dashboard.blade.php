@@ -347,6 +347,7 @@ async defer></script>
 	function loadFunction() {
 		document.getElementById("loader").style.display = "block";
 		var myVar = setTimeout(showPage, 5000);
+		var myVar = setTimeout(showPage, 8000);
 	}
 
 	//Hide loader
