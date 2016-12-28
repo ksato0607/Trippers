@@ -347,11 +347,12 @@ async defer></script>
 	function loadFunction() {
 		document.getElementById("loader").style.display = "block";
 		var firstCall = setTimeout(showPage, 5000);
-		var secondCall = setTimeout(showPage, 8000);
+		//var secondCall = setTimeout(showPage, 8000);
 	}
 
 	//Hide loader
 	function showPage() {
+		alert("show page is called");
 		if(document.getElementById("loader").style.display == "block"){
 			firebaseUpload();
 			firebaseUpload();
