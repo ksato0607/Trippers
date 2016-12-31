@@ -130,13 +130,17 @@ function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 40.4168, lng: 5.7038},
     zoom: 1,
-    scrollwheel: false
+    scrollwheel: false,
+		mapTypeControl: false,
+		streetViewControl: false
   });
 } else {
   map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 40.4168, lng: 5.7038},
     zoom: 2,
-    scrollwheel: false
+    scrollwheel: false,
+		mapTypeControl: false,
+		streetViewControl: false
   });
 }
   var geocoder = new google.maps.Geocoder();
