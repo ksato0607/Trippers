@@ -170,7 +170,7 @@ function initMap() {
             popupImage(url,story,address);
       });
     } else {
-      //alert('Geocode was not successful for the following reason: ' + status);
+      alert('Geocode was not successful for the following reason: ' + status);
     }
   });
 }
@@ -232,6 +232,7 @@ async defer></script>
 				</div>
 				<div class="col-md-2 col-xs-3">
 					<img id="travellers" src="{{ $data->profileUrl}}"></img>
+					<!-- <div class="fb-like" data-href="http://phplaravel-32936-71196-193828.cloudwaysapps.com/" data-layout="button_count" data-action="like" data-size="small" data-show-faces="false" data-share="false"></div> -->
 				</div>
 			</div>
 		</li>
@@ -359,7 +360,6 @@ async defer></script>
 		alert("show page is called");
 		if(document.getElementById("loader").style.display == "block"){
 			firebaseUpload();
-			firebaseUpload();
 		}
 	}
 
@@ -386,10 +386,15 @@ async defer></script>
 			profileUrl = profile_url;
 			}).then(function(){
 			$.get("/test?url=" + imageUrl + '&message='+message + '&location=' + imageLocation + '&profileUrl=' + profileUrl);
-			$('#portfolio').load(document.URL +  ' #portfolio');
-			document.getElementById('validationSuccess').style.display = "block";
-			document.getElementById("contactForm").reset();
-			document.getElementById("loader").style.display = "none";
+			location.reload(function(){
+				document.getElementById('validationSuccess').style.display = "block";
+				alert("inside reload");
+			});
+			// $('#portfolio').load(document.URL + ' #portfolio');
+			// $('#map').load(document.URL +  ' #map');
+			// $('#footer-above').load(document.URL +  ' #footer-above');
+			//document.getElementById("contactForm").reset();
+			//document.getElementById("loader").style.display = "none";
 		});});
 	}
 
